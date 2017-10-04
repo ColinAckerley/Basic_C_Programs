@@ -17,6 +17,7 @@ char* compress(char line[])
         else
         {
             compressed = (char*) realloc(compressed, (memCalc * 2 ) +1);
+            
             char tmp = (end - start) + '0';
             compressed[curCompSpot] = line[start];
             curCompSpot++;
@@ -41,13 +42,13 @@ char* compress(char line[])
 }
 int main(int argc, char **argv)
 {
-    int length = strlen(argv[1]);
-    char *word = argv[1];
-    if(argv[2] != NULL)
+    if(argc > 2 || argc < 2)
     {
         printf("error\n");
         return 0;
     }
+    int length = strlen(argv[1]);
+    char *word = argv[1];
     for(int i = 0; i < length -1; i++)
     {
         if(word[i]=='0'||word[i]=='1'||word[i]=='2'||word[i]=='3'||word[i]=='5'||word[i]=='6'||word[i]=='7'||word[i]=='8'||word[i]=='9')

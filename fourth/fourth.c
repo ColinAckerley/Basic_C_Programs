@@ -1,42 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
-int **allocateBoardMem(int size)
+int **allocateMatrixMem(int size)
 {
-    int **board = (int **)malloc(size * sizeof(int *));
+    int **matrix = (int **)malloc(size * sizeof(int *));
     for (int row = 0; row < size; row++)
     {
-        board[row] = (int *)malloc(size * sizeof(int));
+        matrix[row] = (int *)malloc(size * sizeof(int));
     }
-    return board;
+    return matrix;
 }
-void freeBoardMem(int **board, int size)
+void freeMatrixMem(int **matrix, int size)
 {
     for (int i = 0; i < size; i++)
     {
-        free(board[i]);
+        free(matrix[i]);
     }
-    free(board);
+    free(matrix);
 }
-void print(int **board, int size)
+void print(int **matrix, int size)
 {
     for (int i = 0; i < size; i++)
     {
         for (int j = 0; j < size; j++)
         {
-            printf("%d\t", board[i][j]);
+            printf("%d\t", matrix[i][j]);
         }
         printf("\n");
     }
 }
-int **multiply(int **boarda, int **boardb, int size)
+int **multiply(int **matrixa, int **matrixb, int size)
 {
     int sum = 0;
-    int **newMatrix = allocateBoardMem(size);
+    int **newMatrix = allocateMatrixMem(size);
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             sum = 0;
             for (int k = 0; k <size; k++) {
-                sum = sum + boarda[i][k] * boardb[k][j];
+                sum = sum + matrixa[i][k] * matrixb[k][j];
             }
             newMatrix[i][j] = sum;
         }
@@ -56,8 +56,8 @@ int main(int argc, char **argv)
         exit(0);
     }
     fscanf(fp,"%d\n", &arrSize);
-    int **curMatrix = allocateBoardMem(arrSize);
-    int **ogMatrix = allocateBoardMem(arrSize);
+    int **curMatrix = allocateMatrixMem(arrSize);
+    int **ogMatrix = allocateMatrixMem(arrSize);
     int curVal = 0;
     int col, row;
     row = 0;
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
     }
     print(curMatrix, arrSize);
     fclose(fp);
-    freeBoardMem(curMatrix, arrSize);
-    freeBoardMem(ogMatrix, arrSize);
+    freeMatrixMem(curMatrix, arrSize);
+    freeMatrixMem(ogMatrix, arrSize);
     return 0;
 }

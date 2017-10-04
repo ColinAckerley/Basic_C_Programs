@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
-int **allocateBoardMem(int size)
+int **allocateMatrixMem(int size)
 {
-    int **board = (int **)malloc(size * sizeof(int *));
+    int **matrix = (int **)malloc(size * sizeof(int *));
     for (int row = 0; row < size; row++)
     {
-        board[row] = (int *)malloc(size * sizeof(int));
+        matrix[row] = (int *)malloc(size * sizeof(int));
     }
-    return board;
+    return matrix;
 }
-void freeBoardMem(int **board, int size)
+void freeMatrixMem(int **matrix, int size)
 {
     for (int i = 0; i < size; i++)
     {
-        free(board[i]);
+        free(matrix[i]);
     }
-    free(board);
+    free(matrix);
 }
-int checkDuplicates(int **board, int size)
+int checkDuplicates(int **matrix, int size)
 {
     int newArray[size*size];
     int tmp = 0;
@@ -25,7 +25,7 @@ int checkDuplicates(int **board, int size)
     {
         for(int j =0; j < size; j++)
         {
-            newArray[tmp] = board[i][j];
+            newArray[tmp] = matrix[i][j];
             tmp++;
         }
     }
@@ -41,19 +41,19 @@ int checkDuplicates(int **board, int size)
     }
     return 1;
 }
-int checkVertical(int **board, int size)
+int checkVertical(int **matrix, int size)
 {
     int mainSum = 0;
     int curSum = 0;
     for(int i = 0; i < size; i++)
     {
-        mainSum += board[i][0];
+        mainSum += matrix[i][0];
     }
     for(int col = 1; col < size; col++)
     {
         for(int row = 0; row < size; row++)
         {
-            curSum += board[row][col];
+            curSum += matrix[row][col];
         }
         if(curSum != mainSum)
             return 0;
@@ -62,19 +62,19 @@ int checkVertical(int **board, int size)
     }
     return 1;
 }
-int checkHorizontal(int **board, int size)
+int checkHorizontal(int **matrix, int size)
 {
     int mainSum = 0;
     int curSum = 0;
     for(int i = 0; i < size; i++)
     {
-        mainSum += board[0][i];
+        mainSum += matrix[0][i];
     }
     for(int row = 1; row < size; row++)
     {
         for(int col = 0; col < size; col++)
         {
-            curSum += board[row][col];
+            curSum += matrix[row][col];
         }
         if(curSum != mainSum)
             return 0;
@@ -83,7 +83,7 @@ int checkHorizontal(int **board, int size)
     }
     return 1;
 }
-int checkDiagonal(int **board, int size)
+int checkDiagonal(int **matrix, int size)
 {
     int sumA = 0;
     int sumB = 0;
@@ -92,8 +92,8 @@ int checkDiagonal(int **board, int size)
         for (int j=0;j<size;j++)
         {
             
-            if(i==j)  sumA+=board[i][j];
-            if(i+j==size-1) sumB+=board[i][j];
+            if(i==j)  sumA+=matrix[i][j];
+            if(i+j==size-1) sumB+=matrix[i][j];
         }
     }
     if(sumA == sumB)
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
         exit(0);
     }
     fscanf(fp,"%d\n", &arrSize);
-    int **matrix = allocateBoardMem(arrSize);
+    int **matrix = allocateMatrixMem(arrSize);
     int curVal = 0;
     int col, row;
     row = 0;
@@ -136,6 +136,6 @@ int main(int argc, char **argv)
     else
         printf("not-magic\n");
     fclose(fp);
-    freeBoardMem(matrix, arrSize);
+    freeMatrixMem(matrix, arrSize);
     return 0;
 }
